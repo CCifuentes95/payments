@@ -1,0 +1,61 @@
+service: payments
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  role: LambdaAuroraRole
+  vpc:
+    securityGroupIds:
+      - ###
+    subnetIds:
+      - ###
+      - ###
+  environment:
+    DATABASE_HOST: ###
+    DATABASE_NAME: "payments_db"
+    DATABASE_USER: "admin"
+    DATABASE_SECRET: ###
+
+functions:
+  searchAccounts:
+    handler: src/accounts-api/searchAccounts.search
+    events:
+      - httpApi:
+          path: /account
+          method: get
+  getAccount:
+    handler: src/accounts-api/getAccount.search
+    events:
+      - httpApi:
+          path: /account/{id}
+          method: get
+  getAccountMovements:
+    handler: src/accounts-api/getAccountMovements.search
+    events:
+      - httpApi:
+          path: /account/{id}/movements
+          method: get
+  saveMovements:
+    handler: src/accounts-api/saveMovement.save
+    events:
+      - httpApi:
+          path: /account/saveMovement
+          method: post
+  searchUsers:
+    handler: src/users-api/searchUsers.search
+    events:
+      - httpApi:
+          path: /users
+          method: get
+  getUser:
+    handler: src/users-api/getUser.search
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: get
+
+resources:
+  - ${file(./infrastructure/database.yml)}
+  - ${file(./infrastructure/lambdaRole.yml)}

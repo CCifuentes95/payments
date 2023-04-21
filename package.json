@@ -1,0 +1,10 @@
+{
+  "name": "payments",
+  "version": "1.0.0",
+  "dependencies": {
+    "aws-sdk": "^2.1359.0",
+    "serverless-mysql": "^1.5.5"
+  },
+  "author": "CCifuentes95",
+  "license": "ISC"
+}

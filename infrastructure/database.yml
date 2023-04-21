@@ -1,0 +1,27 @@
+Resources:
+  PaymentsCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      Engine: aurora
+      EngineMode: serverless
+      MasterUsername: admin
+      MasterUserPassword: admin123
+      DatabaseName: payments_db
+      ScalingConfiguration:
+        AutoPause: true
+        MaxCapacity: 4
+        MinCapacity: 1
+        SecondsUntilAutoPause: 300
+      EnableHttpEndpoint: true
+      DeletionProtection: false
+      VpcSecurityGroupIds:
+        - sg-2679356c
+      DBSubnetGroupName:
+        Ref: PaymentsSubnetGroup
+  PaymentsSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for Aurora Serverless
+      SubnetIds:
+        - subnet-f19827ad
+        - subnet-597b3913
